@@ -1,0 +1,46 @@
+Mon Jan 15 23:38:27 2018
+
+Company                 Prev Close (Rs)  Current Price (Rs)      % Change
+--------------------  -----------------  --------------------  ----------
+HDFC                            1760.95  1,871.20                    6.26
+ICICI Bank                       317.7   329.30                      3.65
+Ambuja Cements Ltd.              269.4   276.95                      2.8
+UltraTech Cement                4405.5   4,520.15                    2.6
+Zee Entertainment En             591     606.15                      2.56
+HDFC Bank                       1865.3   1,897.75                    1.74
+Tata Steel                       770.25  783.50                      1.72
+Power Grid Corpo                 196.35  199.30                      1.5
+Kotak Mahindra Bank             1023.35  1,038.35                    1.47
+Asian Paints Ltd.               1189.7   1,204.05                    1.21
+Axis Bank Ltd.                   555.1   560.55                      0.98
+Bosch Ltd.                     19771.6   19,903.65                   0.67
+Indian Oil Corp                  389.05  390.85                      0.46
+NTPC                             172.5   172.95                      0.26
+Infosys                         1078.45  1,081.15                    0.25
+SBI                              302.25  302.60                      0.12
+Hind. Petrol                     425.9   426.05                      0.04
+Indiabulls Housing F            1224.6   1,225.15                    0.04
+ITC Ltd.                         267.55  267.60                      0.02
+Reliance Inds.                   949     949.15                      0.02
+=======================================================================================
+
+Tue Jan 30 13:55:51 2018
+
+Company                 Prev Close (Rs)  Current Price (Rs)      % Change
+--------------------  -----------------  --------------------  ----------
+Bharat Petroleum                 469.8   480.00                      2.17
+Hind. Petrol                     375.15  380.85                      1.52
+GAIL (India) Ltd.                474.35  481.25                      1.45
+Hero MotoCorp                   3641.75  3,685.40                    1.2
+Bharti Airtel                    440.6   444.55                      0.9
+Sun Pharma.                      587.95  593.05                      0.87
+Indian Oil Corp                  399.65  402.35                      0.68
+Bajaj Auto Ltd.                 3363.9   3,384.00                    0.6
+SBI                              312.1   313.85                      0.56
+Power Grid Corpo                 194.15  195.05                      0.46
+NTPC                             171.05  171.65                      0.35
+Tech Mahindra Ltd.               604.8   605.80                      0.17
+Hindustan Unilever L            1397.3   1,397.90                    0.04
+Maruti Suzuki India             9630.7   9,632.15                    0.02
+=======================================================================================
+

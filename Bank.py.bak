@@ -768,7 +768,7 @@ def Existing_Account():
         print "Database Empty"
         New_Account()
 
-    Temp_Database = open("TempMain.dat", "wb")
+    Temp_Database = open("./Database/TempMain.dat", "wb")
     while True:
         Customer_Database = open("./Database/Customer.dat", "rb")
         while True:
@@ -840,7 +840,7 @@ def Existing_Account():
 
     Temp_Database.close()
     remove("./Database/Customer.dat")
-    rename("TempMain.dat", "./Database/Customer.dat")
+    rename("./Database/TempMain.dat", "./Database/Customer.dat")
 
 def Utility_Menu():
     system("cls")

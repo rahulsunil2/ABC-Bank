@@ -39,7 +39,7 @@ class Bank:
                 Customer_Database.close()
                 break
 
-    def Admin(self):
+    def admin(self):
         system("cls")
         if input("Primary Password : ") == "admin":
             if input("Secondary Password : ") == "ABC":
@@ -768,7 +768,7 @@ def Existing_Account():
         print("Database Empty")
         New_Account()
 
-    Temp_Database = open("TempMain.dat", "wb")
+    Temp_Database = open("./Database/TempMain.dat", "wb")
     while True:
         Customer_Database = open("./Database/Customer.dat", "rb")
         while True:
@@ -840,7 +840,7 @@ def Existing_Account():
 
     Temp_Database.close()
     remove("./Database/Customer.dat")
-    rename("TempMain.dat", "./Database/Customer.dat")
+    rename("./Database/TempMain.dat", "./Database/Customer.dat")
 
 def Utility_Menu():
     system("cls")
@@ -1110,7 +1110,7 @@ while True:
     elif opt == "3":
         Utility_Menu()
     elif opt == "4":
-        globalBank.Admin()
+        globalBank.admin()
     elif opt == "5":
         print("Please Wait.......")
         globalBank.EmailLogging()

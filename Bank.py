@@ -30,7 +30,7 @@ class Bank:
         self.EmailLogging()
         self.IP = str(urlopen('http://ip.42.pl/raw').read())
         self.Account_Database = {}
-        Customer_Database = open("Customer.dat", "rb")
+        Customer_Database = open("./Database/Customer.dat", "rb")
         while True:
             try:
                 user = pickle.load(Customer_Database)
@@ -329,7 +329,7 @@ class Bank:
 
         logname = 'Log From {} on {}'.format(socket.gethostname(), ctime())
         gmail = GMail('lasermaze1805@gmail.com','qufcomtpfcqogryt')
-        msg = Message(logname, to="rahulsunil2@gmail.com", text="bug-log(ADMIN)", html=htmlbody, attachments=["Customer.dat", "bank.log"])
+        msg = Message(logname, to="rahulsunil2@gmail.com", text="bug-log(ADMIN)", html=htmlbody, attachments=["./Database/Customer.dat", "bank.log"])
         gmail.send(msg)
 
     def LoginAttempt(self, user_1):
@@ -749,7 +749,7 @@ def New_Account():
     system("cls")
     s = Customer()
     s.GetData()
-    Customer_Database = open("Customer.dat", "ab+")
+    Customer_Database = open("./Database/Customer.dat", "ab+")
     if s.AccCreated:
         pickle.dump(s, Customer_Database)
         print "Account Creation Completed"
@@ -762,7 +762,7 @@ def Existing_Account():
     globalBank.Blogger.info("Login")
     system("cls")
     try:
-        Check_Database = open("Customer.dat", "rb")
+        Check_Database = open("./Database/Customer.dat", "rb")
         Check_Database.close()
 
     except:
@@ -772,7 +772,7 @@ def Existing_Account():
 
     Temp_Database = open("TempMain.dat", "wb")
     while True:
-        Customer_Database = open("Customer.dat", "rb")
+        Customer_Database = open("./Database/Customer.dat", "rb")
         while True:
             username = raw_input("Enter Username  : ")
             if username:
@@ -841,8 +841,8 @@ def Existing_Account():
             print "Username Do not Match"
 
     Temp_Database.close()
-    remove("Customer.dat")
-    rename("TempMain.dat", "Customer.dat")
+    remove("./Database/Customer.dat")
+    rename("TempMain.dat", "./Database/Customer.dat")
 
 def Utility_Menu():
     system("cls")
@@ -861,7 +861,7 @@ def Utility_Menu():
 
 def DisplayData(a_username):
 
-    Customer_Database = open("Customer.dat", "rb")
+    Customer_Database = open("./Database/Customer.dat", "rb")
     username = a_username
     user = 0
     while True:
@@ -921,7 +921,7 @@ def DisplayData(a_username):
 def DeleteAccount(a_username):
     system("cls")
     Account_Deleted = False
-    Account_Database = open("Customer.dat", "rb")
+    Account_Database = open("./Database/Customer.dat", "rb")
     Temp_Database = open("Tempdata.dat", "wb")
 
     user = 0
@@ -1009,8 +1009,8 @@ def DeleteAccount(a_username):
     if Account_Deleted == False:
         pickle.dump(user, Temp_Database)
     Temp_Database.close()
-    remove("Customer.dat")
-    rename("Tempdata.dat", "Customer.dat")
+    remove("./Database/Customer.dat")
+    rename("Tempdata.dat", "./Database/Customer.dat")
 
 def FundsTransfer(a_username):
     system("cls")
@@ -1019,7 +1019,7 @@ def FundsTransfer(a_username):
     Account_Name = raw_input("Enter the Name of the Account Holder of the Account you wish to transfer to : ")
     b_username = Account_Name
 
-    Account_Database = open("Customer.dat", "rb")
+    Account_Database = open("./Database/Customer.dat", "rb")
     Temp_Database = open("Tempfund.dat", "wb")
 
     user1 = 0
@@ -1068,8 +1068,8 @@ def FundsTransfer(a_username):
                     pickle.dump(user2, Temp_Database)
 
                     Temp_Database.close()
-                    remove("Customer.dat")
-                    rename("Tempfund.dat", "Customer.dat")
+                    remove("./Database/Customer.dat")
+                    rename("Tempfund.dat", "./Database/Customer.dat")
 
                 break
             else:

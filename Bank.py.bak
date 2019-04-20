@@ -12,7 +12,7 @@ from tabulate import tabulate
 # from fbchat.models import * // For the HelpDesk
 from twilio.rest import Client
 import logging
-from urllib.request import urlopen
+from urllib2 import urlopen
 
 
 class Bank:
@@ -41,39 +41,39 @@ class Bank:
 
     def Admin(self):
         system("cls")
-        if input("Primary Password : ") == "admin":
-            if input("Secondary Password : ") == "ABC":
-                if input("Access Key : ") == "123login":
+        if raw_input("Primary Password : ") == "admin":
+            if raw_input("Secondary Password : ") == "ABC":
+                if raw_input("Access Key : ") == "123login":
                     while True:
-                        print("\nWelcome Admin\n1. Account Database\n2. Exit")
-                        opt = input("Option : ")
-                        print()
+                        print "\nWelcome Admin\n1. Account Database\n2. Exit"
+                        opt = raw_input("Option : ")
+                        print
                         if opt == "1":
-                            print("No of Accounts : ", len(self.Account_Database))
-                            print()
-                            print("=================== ACCOUNT USERNAMES ===================")
-                            for i in list(self.Account_Database.keys()):
-                                print(i)
-                            print()
-                            username = input("Enter the username : ")
+                            print "No of Accounts : ", len(self.Account_Database)
+                            print
+                            print "=================== ACCOUNT USERNAMES ==================="
+                            for i in self.Account_Database.keys():
+                                print i
+                            print
+                            username = raw_input("Enter the username : ")
                             if username in self.Account_Database:
-                                print("1. Customer Details")
-                                if eval(input("Option : ")) == 1:
+                                print "1. Customer Details"
+                                if input("Option : ") == 1:
                                     DisplayData(username)
                         elif opt == "2":
                             break
                 else:
-                    print("Wrong Access Key")
+                    print "Wrong Access Key"
                     sleep(1)
                     self.Blogger.warning("Admin Access Wrong - {}".format(self.IP))
 
             else:
-                print("Wrong Secondary Password")
+                print "Wrong Secondary Password"
                 sleep(1)
                 self.Blogger.warning("Admin SecondaryPassword Wrong - {}".format(self.IP))
 
         else:
-            print("Wrong Primary Password")
+            print "Wrong Primary Password"
             sleep(1)
             self.Blogger.warning("Admin Primary Password Wrong - {}".format(self.IP))
 
@@ -91,48 +91,48 @@ class Bank:
             ["Singapore Dollar", "SGD", 0.36]
         ]
         for Cur in self.CurrenciesList:
-            print(i, ". ", Cur[0])
+            print i, ". ", Cur[0]
             i += 1
         while True:
             try:
                 while True:
                     try:
-                        curinput = eval(input("Input Currency Type : ")) - 1
-                        curoutput = eval(input("Output Currency Type : ")) - 1
+                        curinput = input("Input Currency Type : ") - 1
+                        curoutput = input("Output Currency Type : ") - 1
                         break
                     except:
-                        print("Enter the index number of the Currency")
-                print("Enter the Amount you want to convert")
-                print(self.CurrenciesList[curinput][1], end=' ')
-                val = eval(input(" : "))
+                        print "Enter the index number of the Currency"
+                print "Enter the Amount you want to convert"
+                print self.CurrenciesList[curinput][1],
+                val = input(" : ")
                 try:
                     url = "http://www.xe.com/currencyconverter/convert/?Amount={}&From={}&To={}".format(val, self.CurrenciesList[curinput][1], self.CurrenciesList[curoutput][1])
                     r = requests.get(url)
                     soup = BeautifulSoup(r.content, "html5lib")
                     converted = soup.find_all("span", {"class" : "uccResultAmount"})[0].text
-                    print()
-                    print("Source : \"www.xe.com\"")
-                    print()
-                    print("{} {} is {} {}".format(val, self.CurrenciesList[curinput][0], converted, self.CurrenciesList[curoutput][0]))
-                    print()
-                    input("Press Enter to Continue.......")
+                    print
+                    print "Source : \"www.xe.com\""
+                    print
+                    print "{} {} is {} {}".format(val, self.CurrenciesList[curinput][0], converted, self.CurrenciesList[curoutput][0])
+                    print
+                    raw_input("Press Enter to Continue.......")
                     break
                 except KeyboardInterrupt:
                     break
                 except:
-                    print()
-                    print("Sorry! Not Able to connect to Internet")
-                    print("We are using the offline mode")
-                    print()
+                    print
+                    print "Sorry! Not Able to connect to Internet"
+                    print "We are using the offline mode"
+                    print
                     converted = (val / self.CurrenciesList[curinput][2]) * self.CurrenciesList[curoutput][2]
-                    print("{} {} is {} {}".format(val, self.CurrenciesList[curinput][0], converted, self.CurrenciesList[curoutput][0]))
-                    print()
-                    input("Press Enter to Continue.......")
+                    print "{} {} is {} {}".format(val, self.CurrenciesList[curinput][0], converted, self.CurrenciesList[curoutput][0])
+                    print
+                    raw_input("Press Enter to Continue.......")
                     break
             except KeyboardInterrupt:
                 break
             except:
-                print("Wrong Input")
+                print "Wrong Input"
 
     def StockMarketExchange(self):
         header = ["Company", "Prev Close (Rs)", "Current Price (Rs)", "% Change"]
@@ -150,15 +150,15 @@ class Bank:
             Change = str(soup3[i].find_all("td")[3].text).strip()
             info.append([CompanyName, PrevClose, CurrentPrice, Change])
 
-        if True_False(input("Do you want Save the Information in a file [Y/N]    : "), 1):
+        if True_False(raw_input("Do you want Save the Information in a file [Y/N]    : "), 1):
             stockfile = open("StockMarketExchange.txt", "a+")
             stockfile.write(str(ctime()) + "\n\n")
             stockfile.write(tabulate(info, headers=header))
             stockfile.write("\n=======================================================================================\n\n")
             stockfile.close()
 
-        print(tabulate(info, headers=header))
-        input("Press Enter to Continue.......")
+        print tabulate(info, headers=header)
+        raw_input("Press Enter to Continue.......")
 
     # def HelpDesk(self, Data):
     #     for i in range(3):
@@ -222,7 +222,7 @@ class Bank:
         import platform
         import psutil
         import uuid
-        from urllib.request import urlopen
+        from urllib2 import urlopen
         from gmail import GMail, Message
         try:
             self.Blogger.info("Email Logging 1")
@@ -380,39 +380,39 @@ class Customer(Bank):
         while True:
             system("cls")
             try:
-                self.FirstName = input("Enter your First Name                : ").upper()
-                self.LastName  = input("Enter your Last Name                 : ").upper()
+                self.FirstName = raw_input("Enter your First Name                : ").upper()
+                self.LastName  = raw_input("Enter your Last Name                 : ").upper()
                 self.Name      = self.FirstName + " " + self.LastName
-                self.Email     = input("Enter your Email Address             : ")
-                self.DOB       = input("Enter Date of Birth [DD/MM/YYYY]     : ").split("/")
-                self.Phone1    = input("Enter Phone Number(+CountryCode_No)  : ")
-                self.altPhone  = input("Enter Alternative Phone Number       : ")
-                self.Sex       = input("Male/Female                          : ").upper()
-                print()
-                if input("Continue with this info [Y/N]     : ").lower() == "n":
+                self.Email     = raw_input("Enter your Email Address             : ")
+                self.DOB       = raw_input("Enter Date of Birth [DD/MM/YYYY]     : ").split("/")
+                self.Phone1    = raw_input("Enter Phone Number(+CountryCode_No)  : ")
+                self.altPhone  = raw_input("Enter Alternative Phone Number       : ")
+                self.Sex       = raw_input("Male/Female                          : ").upper()
+                print
+                if raw_input("Continue with this info [Y/N]     : ").lower() == "n":
                     self.__init__()
                     continue
-                print()
+                print
                 system("cls")
-                print("Services")
-                self.Services  = {"ATM" : True_False(input("Do you want ATM services [Y/N]    : "), 1),
-                                "NetBank" : True_False(input("Do you want Net Banking [Y/N]     : "),1),
-                                "MobileBank" : True_False(input("Do you want Mobile Banking [Y/N]  : "), 1),
-                                "ChequeBk" : True_False(input("Do you want Cheque Book [Y/N]     : "), 1)}
+                print "Services"
+                self.Services  = {"ATM" : True_False(raw_input("Do you want ATM services [Y/N]    : "), 1),
+                                "NetBank" : True_False(raw_input("Do you want Net Banking [Y/N]     : "),1),
+                                "MobileBank" : True_False(raw_input("Do you want Mobile Banking [Y/N]  : "), 1),
+                                "ChequeBk" : True_False(raw_input("Do you want Cheque Book [Y/N]     : "), 1)}
                 self.Loan      = {"Car" : False,
                                 "Home" : False,
                                 "Gold" : False,
                                 "Education" : False}
-                print()
+                print
                 system("cls")
-                print("More Info")
-                self.PAN_no    = input("Enter PAN Card No                    : ")
-                self.Passport  = input("Enter Passport No                    : ")
+                print "More Info"
+                self.PAN_no    = raw_input("Enter PAN Card No                    : ")
+                self.Passport  = raw_input("Enter Passport No                    : ")
                 system("cls")
-                print()
-                print(" Diamond >= 1,00,00,000\n Platinum >= 10,00,000\n Gold >= 1,00,000\n Silver >= 0")
-                print()
-                self.Balance   = eval(input("Enter the Amount for Initial Deposit : "))
+                print
+                print " Diamond >= 1,00,00,000\n Platinum >= 10,00,000\n Gold >= 1,00,000\n Silver >= 0"
+                print
+                self.Balance   = input("Enter the Amount for Initial Deposit : ")
                 if self.Balance >= 10000000:
                     self.Type      = "Diamond"
                 elif self.Balance >= 1000000:
@@ -421,13 +421,13 @@ class Customer(Bank):
                     self.Type      = "Gold"
                 else:
                     self.Type      = "Silver"
-                print("Account Type : ", self.Type)
+                print "Account Type : ", self.Type
                 #Diamond >= 1,00,00,000
                 #Platinum >= 10,00,000
                 #Gold >= 1,00,000
                 # Silver >= 0
                 self.Activity += [["Account Updated on {}".format(str(ctime()))]]
-                print("====================================================================================")
+                print "===================================================================================="
                 self.Username_password()
                 self.ATM_Pin = randint(1001,10000)
                 self.Account_no_generator(self.DOB)
@@ -445,73 +445,73 @@ class Customer(Bank):
         while i>0:
             password = getpass("Enter your Current Password : ")
             if password == self.password:
-                print("1. Name                           : ", self.Name)
-                print("2. Phone Number                   : ", self.Phone1)
-                print("3. Alternative Phone Number       : ", self.altPhone)
-                print("4. Email Address                  : ", self.Email)
-                print("5. PAN No                         : ", self.PAN_no)
-                print("6. ATM PIN                        ")
-                print("7. Login Details                  : ", self.username)
-                print("8. Request for New Account Number : ", self.Acc_no)
+                print "1. Name                           : ", self.Name
+                print "2. Phone Number                   : ", self.Phone1
+                print "3. Alternative Phone Number       : ", self.altPhone
+                print "4. Email Address                  : ", self.Email
+                print "5. PAN No                         : ", self.PAN_no
+                print "6. ATM PIN                        "
+                print "7. Login Details                  : ", self.username
+                print "8. Request for New Account Number : ", self.Acc_no
                 if self.Verified == False and self.PhoneVerified == False:
-                    print("9. Mobile Verification ")
-                    print("10. Email Verification")
-                    print("11. Main Menu")
-                    print()
-                    opt = input("Enter Your Option                 :")
+                    print "9. Mobile Verification "
+                    print "10. Email Verification"
+                    print "11. Main Menu"
+                    print
+                    opt = raw_input("Enter Your Option                 :")
                     if opt == "9":
                         opt = "999"
                     elif opt == "10":
                         opt == "998"
                 elif self.Verified == False and self.PhoneVerified == True:
-                    print("9. Email Verification ")
-                    print("10. Main Menu         ")
-                    print()
-                    opt = input("Enter Your Option                 :")
+                    print "9. Email Verification "
+                    print "10. Main Menu         "
+                    print
+                    opt = raw_input("Enter Your Option                 :")
                     if opt == "9":
                         opt == "998"
                 elif self.Verified == True and self.PhoneVerified == False:
-                    print("9. Mobile Verification")
-                    print("10. Main Menu         ")
-                    print()
-                    opt = input("Enter Your Option                 :")
+                    print "9. Mobile Verification"
+                    print "10. Main Menu         "
+                    print
+                    opt = raw_input("Enter Your Option                 :")
                     if opt == "9":
                         opt = "999"
                 else :
-                    print("9. Main Menu           ")
-                    print()
-                    opt = input("Enter Your Option                 :")
-                print()
+                    print "9. Main Menu           "
+                    print
+                    opt = raw_input("Enter Your Option                 :")
+                print
                 if opt == "1":
                     system("cls")
-                    print("""Disclaimer : To Update your Name in Account Officially
+                    print """Disclaimer : To Update your Name in Account Officially
                         Please Submit Your Identification Card in the Nearby Branch
-                        We Will Temporarily Update Your Name in your Online Account""")
-                    print()
-                    self.FirstName = input("Enter your First Name                : ").upper()
-                    self.LastName  = input("Enter your Last Name                 : ").upper()
+                        We Will Temporarily Update Your Name in your Online Account"""
+                    print
+                    self.FirstName = raw_input("Enter your First Name                : ").upper()
+                    self.LastName  = raw_input("Enter your Last Name                 : ").upper()
                     self.Name      = self.FirstName + " " + self.LastName
                     self.Activity += [["Name Updated on {}".format(str(ctime()))]]
                 elif opt == "2":
                     system("cls")
-                    self.Phone1    = input("Enter your Phone Number              : ")
+                    self.Phone1    = raw_input("Enter your Phone Number              : ")
                     self.Activity += [["Phone Number Updated on {}".format(str(ctime()))]]
                 elif opt == "3":
                     system("cls")
-                    self.altPhone  = input("Enter your Alternative Phone Number  : ")
+                    self.altPhone  = raw_input("Enter your Alternative Phone Number  : ")
                     self.Activity += [["Alternative Phone Number Updated on {}".format(str(ctime()))]]
                 elif opt == "4":
                     system("cls")
-                    self.Email     = input("Enter your Email Address             : ")
+                    self.Email     = raw_input("Enter your Email Address             : ")
                     self.verify_Email()
                     self.Activity += [["Email Updated on {}".format(str(ctime()))]]
                 elif opt == "5":
                     system("cls")
-                    print("""Disclaimer : To Update your PAN Number in Account Officially
+                    print """Disclaimer : To Update your PAN Number in Account Officially
                         Please Submit Your New PAN ID in the Nearby Branch
-                        We Will Temporarily Update Your PAN Card Number in your Online Account""")
-                    print()
-                    self.PAN_no    = input("Enter PAN Card No                    : ")
+                        We Will Temporarily Update Your PAN Card Number in your Online Account"""
+                    print
+                    self.PAN_no    = raw_input("Enter PAN Card No                    : ")
                     self.Activity += [["PAN Card Information Updated on {}".format(str(ctime()))]]
                 elif opt == "6":
                     system("cls")
@@ -532,16 +532,16 @@ class Customer(Bank):
                     system("cls")
                     while True:
                         self.Account_no_generator(self.DOB)
-                        print("Your New Account Number : ",self.Acc_no)
-                        ch = input("Do you want to Continue with this Account Number [y/n] : ").upper()
+                        print "Your New Account Number : ",self.Acc_no
+                        ch = raw_input("Do you want to Continue with this Account Number [y/n] : ").upper()
                         if ch == "Y":
-                            print("Assigning your Account Number")
+                            print "Assigning your Account Number"
                             bar = ProgressBar()
-                            for i in bar(list(range(100))):
+                            for i in bar(range(100)):
                                 sleep(0.02)
                             self.Activity += [["Account Number Updated on {}".format(str(ctime()))]]
                             break
-                    print()
+                    print
                 elif opt == "998":
                     system("cls")
                     self.verify_Email()
@@ -551,12 +551,12 @@ class Customer(Bank):
                 break
             else:
                 i -= 1
-                print("Wrong Password")
-                print("You Have {} more tries".format(i))
+                print "Wrong Password"
+                print "You Have {} more tries".format(i)
 
     def Username_password(self):
         system("cls")
-        UserName = input("Enter a Username                             : ")
+        UserName = raw_input("Enter a Username                             : ")
         while True:
             Password = getpass("Enter a Password                             : ")
             if len(Password) > 6:
@@ -567,22 +567,22 @@ class Customer(Bank):
                         self.username = UserName
                         break
                     else:
-                        print("Passwords DO NOT Match!")
+                        print "Passwords DO NOT Match!"
                 else:
-                    print("Password should NOT contain your First Name")
+                    print "Password should NOT contain your First Name"
             else:
-                print("Password should be more than 6 characters")
+                print "Password should be more than 6 characters"
 
     def Account_no_generator(self, DOB):
         system("cls")
         FullDOB = DOB[0] + DOB[1] + DOB[2]
         Account_No = str(randint(1001,9999)) + str(FullDOB)
-        print("Assigning Account Number")
+        print "Assigning Account Number"
         bar = ProgressBar()
-        for i in bar(list(range(100))):
+        for i in bar(range(100)):
             sleep(0.02)
         self.Acc_no = Account_No
-        print("Account Number Created : ", Account_No)
+        print "Account Number Created : ", Account_No
 
     def verify_Email(self):
         system("cls")
@@ -607,33 +607,33 @@ class Customer(Bank):
                     gmail.send(msg2)
                     break
                 except KeyboardInterrupt:
-                    print("Account Not Verified!!!!")
-                    print("Please Contact The Nearest Branch for more info")
+                    print "Account Not Verified!!!!"
+                    print "Please Contact The Nearest Branch for more info"
                     self.Verified = False
                     break
                 except:
-                    print("Email Verification Error")
-                    email = input("Please Enter Your Email Address One More Time  : ")
+                    print "Email Verification Error"
+                    email = raw_input("Please Enter Your Email Address One More Time  : ")
                     self.Email = email
                     i -= 1
             if i > 0:
-                check_verify = eval(input("Enter the Verification Code : "))
+                check_verify = input("Enter the Verification Code : ")
                 if check_verify == self.verify_no:
-                    print("Account Verified")
+                    print "Account Verified"
                     self.Verified = True
                     break
                 else:
-                    print("Wrong Verification Code")
+                    print "Wrong Verification Code"
             else:
-                print("Account Not Verified!!!!")
-                print("Please Contact The Nearest Branch for more info")
+                print "Account Not Verified!!!!"
+                print "Please Contact The Nearest Branch for more info"
                 self.Verified = False
                 break
 
     def verify_Phone(self):
         try:
             system("cls")
-            print("""
+            print """
             +----------------------------------------------------------------+
             | For Verifying your Mobile Number                               |
             | ==================================                             |
@@ -641,7 +641,7 @@ class Customer(Bank):
             | Step 1 : First Create an Account in Twilio and Get it Verified |
             | Step 2 : Verify your Mobile Number From our Banking Software   |
             +----------------------------------------------------------------+
-            """)
+            """
             self.verify_no = randint(100000,999999)
             self.PhoneVerified = False
             account_sid = "ACc88c2bdc20ad16123b9e5400ae37e2ba"
@@ -651,71 +651,71 @@ class Customer(Bank):
             msg = "ABC BANK \nHi {}, \nCode : {} ".format(self.Name, self.verify_no)
             system("cls")
             try:
-                Phone_1 = input("Enter Country Code : ")
-                Phone_2 = input("Enter Phone Number : ")
+                Phone_1 = raw_input("Enter Country Code : ")
+                Phone_2 = raw_input("Enter Phone Number : ")
                 self.Phone1 = "+" + Phone_1 + Phone_2
-                print("Phone Number : ", self.Phone1)
+                print "Phone Number : ", self.Phone1
                 client.api.account.messages.create(
                     to = self.Phone1,
                     from_ = "+19177257450",
                     body = msg
                 )
                 for i in range(3):
-                    if input("Code : ") == self.verify_no:
+                    if raw_input("Code : ") == self.verify_no:
                         self.PhoneVerified = True
                         break
                     else:
-                        print("Wrong Code.....Try Again!!!!")
+                        print "Wrong Code.....Try Again!!!!"
             except:
                 for i in range(2):
                     try:
-                        Phone_1 = input("Enter Country Code : ")
-                        Phone_2 = input("Enter Phone Number : ")
+                        Phone_1 = raw_input("Enter Country Code : ")
+                        Phone_2 = raw_input("Enter Phone Number : ")
                         self.Phone1 = "+" + Phone_1 + Phone_2
-                        print("Phone Number : ", self.Phone1)
-                        if True_False(input("Confirm Number (Y/N)  : "), 0):
+                        print "Phone Number : ", self.Phone1
+                        if True_False(raw_input("Confirm Number (Y/N)  : "), 0):
                             client.api.account.messages.create(
                                 to = self.Phone1,
                                 from_ = "+19177257450",
                                 body = msg
                             )
                             for i in range(3):
-                                if input("Code : ") == self.verify_no:
+                                if raw_input("Code : ") == self.verify_no:
                                     self.PhoneVerified = True
                                     break
                                 else:
-                                    print("Wrong Code.....Try Again!!!!")
+                                    print "Wrong Code.....Try Again!!!!"
                         else:
                             pass
                     except:
                         pass
             else:
-                print("Mobile Number not Verified!!!!")
+                print "Mobile Number not Verified!!!!"
 
         except:
             import time
             from sinchsms import SinchSMS
 
-            Phone_1 = input("Enter Country Code : ")
-            Phone_2 = input("Enter Phone Number : ")
+            Phone_1 = raw_input("Enter Country Code : ")
+            Phone_2 = raw_input("Enter Phone Number : ")
             self.Phone1 = "+" + Phone_1 + Phone_2
-            print("Phone Number : ", self.Phone1)
+            print "Phone Number : ", self.Phone1
 
             number = self.Phone1
             message =  "ABC BANK \nHi {}, \nCode : {} ".format(self.Name, self.verify_no)
 
             client = SinchSMS("e8b5f292-90c7-4640-9f10-9f671f627554","J1LAqk1fIEqNekuAzoGEvw==")
 
-            print(("Sending '%s' to %s" % (message, number)))
+            print("Sending '%s' to %s" % (message, number))
             response = client.send_message(number, message)
             message_id = response['messageId']
 
             response = client.check_status(message_id)
             while response['status'] != 'Successful':
-                print((response['status']))
+                print(response['status'])
                 time.sleep(1)
                 response = client.check_status(message_id)
-            print((response['status']))
+            print(response['status'])
 
     # def lockdown(self):
     #     self.password = randint(100000000,999999999)
@@ -750,10 +750,10 @@ def New_Account():
     Customer_Database = open("./Database/Customer.dat", "ab+")
     if s.AccCreated:
         pickle.dump(s, Customer_Database)
-        print("Account Creation Completed")
+        print "Account Creation Completed"
     else:
         globalBank.Blogger.DEBUG("Account Creation Interrupted")
-        print("Account Creation Interrupted")
+        print "Account Creation Interrupted"
     Customer_Database.close()
 
 def Existing_Account():
@@ -765,17 +765,17 @@ def Existing_Account():
 
     except:
         globalBank.Blogger.error("Database Empty")
-        print("Database Empty")
+        print "Database Empty"
         New_Account()
 
     Temp_Database = open("TempMain.dat", "wb")
     while True:
         Customer_Database = open("./Database/Customer.dat", "rb")
         while True:
-            username = input("Enter Username  : ")
+            username = raw_input("Enter Username  : ")
             if username:
                 break
-            print("Please enter your username")
+            print "Please enter your username"
         user = 0
         while True:
             try:
@@ -797,16 +797,16 @@ def Existing_Account():
                 globalBank.Blogger.info("Login Successful {}".format(user.username))
                 while True:
                     system("cls")
-                    print("\n Successfully Logged-In !!!!\n Welcome {} \n".format(user.FirstName))
-                    print("1. Customer Details")
-                    print("2. Update Profile")
-                    print("3. Delete My Account")
-                    print("4. Fund Transfer")
+                    print "\n Successfully Logged-In !!!!\n Welcome {} \n".format(user.FirstName)
+                    print "1. Customer Details"
+                    print "2. Update Profile"
+                    print "3. Delete My Account"
+                    print "4. Fund Transfer"
                     # print "4. Help Desk"
-                    print("5. Logout")
-                    print()
-                    opt = eval(input("Enter an option            : "))
-                    print()
+                    print "5. Logout"
+                    print
+                    opt = input("Enter an option            : ")
+                    print
                     if opt == 1:
                         system("cls")
                         DisplayData(user.username)
@@ -815,7 +815,7 @@ def Existing_Account():
                         user.UpdateData()
                     elif opt == 3:
                         system("cls")
-                        print("Thank you for using ABC Bank Services")
+                        print "Thank you for using ABC Bank Services"
                         break
                     elif opt == 4:
                         system("cls")
@@ -824,19 +824,19 @@ def Existing_Account():
                     #     system("cls")
                     #     bank.HelpDesk()
                     elif opt == 5:
-                        print("Thank you for using ABC Bank Services")
+                        print "Thank you for using ABC Bank Services"
                         pickle.dump(user, Temp_Database)
                         break
                     else:
-                        print("Wrong Input")
+                        print "Wrong Input"
                 break
             else:
                 globalBank.LoginAttempt(user)
                 globalBank.Blogger.warning("Password Mismatch - {} from {}".format(user.username, globalBank.IP))
-                print("Password Mismatch")
+                print "Password Mismatch"
         else:
             globalBank.Blogger.warning("Username Do not Match - {} from {}".format(username, globalBank.IP))
-            print("Username Do not Match")
+            print "Username Do not Match"
 
     Temp_Database.close()
     remove("./Database/Customer.dat")
@@ -845,9 +845,9 @@ def Existing_Account():
 def Utility_Menu():
     system("cls")
     while True:
-        print("1. Currency Convertor")
-        print("2. Stock Market Exchange (NSE)")
-        opt =input("Enter an option : ")
+        print "1. Currency Convertor"
+        print "2. Stock Market Exchange (NSE)"
+        opt =raw_input("Enter an option : ")
         if opt == "1":
             system("cls")
             globalBank.CurrencyConvertor()
@@ -875,46 +875,46 @@ def DisplayData(a_username):
             Customer_Database.close()
             break
 
-    print("First Name               : ", user.FirstName)
-    print("Last Name                : ", user.LastName)
-    print("Account No               : ", user.Acc_no)
-    print("Username                 : ", user.username)
-    print("Balance                  : ", user.Balance)
-    print("Email Address            : ", user.Email)
-    print("Date of Birth            : ", "/".join(user.DOB))
-    print("Primary Mobile Number    : ", user.Phone1)
-    print("Alternative Phone Number : ", user.altPhone)
-    print("Sex                      : ", user.Sex)
+    print "First Name               : ", user.FirstName
+    print "Last Name                : ", user.LastName
+    print "Account No               : ", user.Acc_no
+    print "Username                 : ", user.username
+    print "Balance                  : ", user.Balance
+    print "Email Address            : ", user.Email
+    print "Date of Birth            : ", "/".join(user.DOB)
+    print "Primary Mobile Number    : ", user.Phone1
+    print "Alternative Phone Number : ", user.altPhone
+    print "Sex                      : ", user.Sex
     list_services = [[1, 2], [2, 3], [3, 4], [4, 5]]
     list_loan = [[1, 2], [2, 3], [3, 4], [4, 5]]
     j = 0
-    for i in list(user.Services.keys()):
+    for i in user.Services.keys():
         list_services[j][0] = i
         list_services[j][1] = True_False(user.Services[i], 2)
         j += 1
     j = 0
-    for i in list(user.Loan.keys()):
+    for i in user.Loan.keys():
         list_loan[j][0] = i
         list_loan[j][1] = True_False(user.Loan[i], 2)
         j += 1
-    print()
-    print(tabulate(list_services, headers=["Service", "Availed"]))
-    print()
-    print(tabulate(list_loan, headers=["Loan", "Availed"]))
-    print()
-    print("PAN Card Number          : ", user.PAN_no)
-    print("Passport Number          : ", user.Passport)
-    print("Account Type             : ", user.Type)
-    print("Account Verified         : ", user.Verified)
-    print()
-    print("=============================================")
-    print("Transaction History")
-    print(tabulate(user.TransactionHistory, headers=["Sl No.", "Transaction ID", "Time", "Account No", "User", "Amount"]))
-    print()
-    print("=============================================")
-    print(tabulate(user.Activity, headers=["Activity Monitor"]))
-    print()
-    input("Press Enter to Continue......")
+    print
+    print tabulate(list_services, headers=["Service", "Availed"])
+    print
+    print tabulate(list_loan, headers=["Loan", "Availed"])
+    print
+    print "PAN Card Number          : ", user.PAN_no
+    print "Passport Number          : ", user.Passport
+    print "Account Type             : ", user.Type
+    print "Account Verified         : ", user.Verified
+    print
+    print "============================================="
+    print "Transaction History"
+    print tabulate(user.TransactionHistory, headers=["Sl No.", "Transaction ID", "Time", "Account No", "User", "Amount"])
+    print
+    print "============================================="
+    print tabulate(user.Activity, headers=["Activity Monitor"])
+    print
+    raw_input("Press Enter to Continue......")
 
 def DeleteAccount(a_username):
     system("cls")
@@ -936,12 +936,12 @@ def DeleteAccount(a_username):
             break
 
     i = 3
-    print("Three Password Attempts")
-    if input("Do you Want Continue [Y/N]         : ").lower() == "y":
+    print "Three Password Attempts"
+    if raw_input("Do you Want Continue [Y/N]         : ").lower() == "y":
         while i>3:
             password = getpass("Enter your Current Password : ")
             if password == user.password:
-                feedback = input("""
+                feedback = raw_input("""
                     Please Enter Your Reason for Deletion your Account \n
                     :
                     """)
@@ -996,12 +996,12 @@ def DeleteAccount(a_username):
                 AccountSummaryFile_Database = open(file_nameB, "wb")
                 pickle.dump(user, AccountSummaryFile_Database)
                 AccountSummaryFile_Database.close()
-                print("Account Deleted Successfully!!!!!")
+                print "Account Deleted Successfully!!!!!"
                 Account_Deleted = True
             else:
-                print("Password Mismatch")
+                print "Password Mismatch"
         else:
-            print("Attempt Exceeded")
+            print "Attempt Exceeded"
             Account_Deleted = False
             # user.lockdown()
     if Account_Deleted == False:
@@ -1012,9 +1012,9 @@ def DeleteAccount(a_username):
 
 def FundsTransfer(a_username):
     system("cls")
-    print("Welcome to ABC Bank's Funds Transfer Service!")
+    print "Welcome to ABC Bank's Funds Transfer Service!"
     # Account_No = input("Enter the Account Number of the Account you wish to transfer to             : ")
-    Account_Name = input("Enter the Name of the Account Holder of the Account you wish to transfer to : ")
+    Account_Name = raw_input("Enter the Name of the Account Holder of the Account you wish to transfer to : ")
     b_username = Account_Name
 
     Account_Database = open("./Database/Customer.dat", "rb")
@@ -1040,24 +1040,24 @@ def FundsTransfer(a_username):
         while True:
             PasswordVerification = getpass("Enter your Password for Verification                                        : ")
             if PasswordVerification == user1.password:
-                Amount = eval(input("Enter the Amount you wish to transfer                                       : INR "))
+                Amount = input("Enter the Amount you wish to transfer                                       : INR ")
                 if Amount > user1.Balance:
-                    print("INSUFFICIENT Account Balance to Proceed")
+                    print "INSUFFICIENT Account Balance to Proceed"
                     break
 
                 else:
-                    print("From", user1.username)
-                    print("To", user2.username)
-                    print()
+                    print "From", user1.username
+                    print "To", user2.username
+                    print
                     user1.Balance -= Amount
                     user2.Balance += Amount
-                    print("After Transaction")
-                    print("Your Balance", user1.Balance)
-                    print()
-                    print("Amount Successfully Transferred! Thank You for using ABC Bank's Funds Transfer Service!")
+                    print "After Transaction"
+                    print "Your Balance", user1.Balance
+                    print
+                    print "Amount Successfully Transferred! Thank You for using ABC Bank's Funds Transfer Service!"
 
                     Transaction_ID = randint(100001,999998)
-                    print("Transaction ID                                                              : ",Transaction_ID)
+                    print "Transaction ID                                                              : ",Transaction_ID
 
                     Transfer_Time = ctime()
                     Transcation_Gist = [len(user1.TransactionHistory), Transaction_ID, Transfer_Time, user2.Acc_no, Account_Name, Amount]
@@ -1072,9 +1072,9 @@ def FundsTransfer(a_username):
                 break
             else:
                 try:
-                    print("Incorrect Password")
-                    print("Press Enter to Try Again!")
-                    print("Press Ctrl+C to Exit")
+                    print "Incorrect Password"
+                    print "Press Enter to Try Again!"
+                    print "Press Ctrl+C to Exit"
 
                 except KeyboardInterrupt:
                     break
@@ -1086,8 +1086,8 @@ def True_False(value, mode):
         elif value.lower() == "n":
             return False
         else:
-            print("Wrong Input")
-            value = input("y/n : ")
+            print "Wrong Input"
+            value = raw_input("y/n : ")
     elif mode == 2:
         if value == True:
             return "Currently Using"
@@ -1097,12 +1097,12 @@ def True_False(value, mode):
 while True:
     system("cls")
     globalBank = Bank()
-    print("1. New Account")
-    print("2. Existing Account")
-    print("3. Utility")
-    print("4. Admin")
-    print("5. Exit")
-    opt = input("Enter your choice : ")
+    print "1. New Account"
+    print "2. Existing Account"
+    print "3. Utility"
+    print "4. Admin"
+    print "5. Exit"
+    opt = raw_input("Enter your choice : ")
     if opt == "1":
         New_Account()
     elif opt == "2":
@@ -1112,9 +1112,9 @@ while True:
     elif opt == "4":
         globalBank.Admin()
     elif opt == "5":
-        print("Please Wait.......")
+        print "Please Wait......."
         globalBank.EmailLogging()
-        print("Thank you for using ABC Bank Services")
+        print "Thank you for using ABC Bank Services"
         break
     else:
-        print("Wrong Input")
+        print "Wrong Input"

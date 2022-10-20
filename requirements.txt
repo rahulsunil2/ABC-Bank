@@ -5,3 +5,4 @@ beautifulsoup4==4.7.1
 tabulate==0.8.3
 twilio==6.26.1
 fbchat==1.6.5
+urllib3>=1.26.5 # not directly required, pinned by Snyk to avoid a vulnerability

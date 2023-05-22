@@ -1,6 +1,6 @@
 progressbar==2.5
 gmail==0.6.3
-requests==2.21.0
+requests==2.31.0
 beautifulsoup4==4.7.1
 tabulate==0.8.3
 twilio==6.26.1
